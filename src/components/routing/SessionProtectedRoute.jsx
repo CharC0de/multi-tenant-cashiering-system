@@ -9,7 +9,7 @@ export default function SessionProtectedRoute() {
     useEffect(() => {
         axiosInstance.get('/api/auth-check/')
             .then(res => setAuth(res.data.isAuthenticated))
-            .catch(() => { setAuth(false); localStorage.removeItem('access_token'); Cookies.remove('sessionid'); }) // remove session cookie on error;
+            .catch(() => { setAuth(false); }) // remove session cookie on error;
     }, []);
     if (auth === null) return (<div>Loading...</div>);
 

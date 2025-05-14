@@ -11,11 +11,13 @@ export default function AuthProvider({ children }) {             // sole export 
         if (res.data.isAuthenticated) {
           return axiosInstance.get('/api/profile/');
         } else {
+          localStorage.removeItem('access_token'); Cookies.remove('sessionid');
           throw new Error('Not authenticated');
+
         }
       })
       .then(r => { setUser(r.data) }) // set the user data in the context
-      .catch(() => setUser(null));
+      .catch(() => { setUser(null); localStorage.removeItem('access_token'); Cookies.remove('sessionid') });
   }
   useEffect(() => {
     fetchUser(); // Fetch user data when the component mounts
